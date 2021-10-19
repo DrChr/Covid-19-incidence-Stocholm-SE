@@ -1,0 +1,3 @@
+Check if GitHub can deal with .org-files.
+
+* Section heading - level - 1
