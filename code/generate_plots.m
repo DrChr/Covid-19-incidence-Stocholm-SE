@@ -129,7 +129,7 @@ function plot_mean_incidence(t_range, varargin)
 end
 
 function set_limits_etc_for_incidence_plots(t_range, region_name)
-    title(sprintf('Covid-19 incidence, %s, (generated %s)', region_name, datestr(now(), 31)));
+    title(sprintf('Covid-19 incidence, %s, (generated %s UTC)', region_name, datestr(now(), 31)));
     set_figure_size(gcf(), 1200, 500);
 
     xlim(t_range);

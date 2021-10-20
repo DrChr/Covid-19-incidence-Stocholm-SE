@@ -1,4 +1,6 @@
-TBC: The graphs below are generated on Tuesdays-Fridays.
+The graphs below are generated on Tuesdays-Fridays.
+
+<img src="Covid-19_incidence_Stockholm_SE.png" width="1200">
 
 ## Covid-19 incidence in Stockholm
 
