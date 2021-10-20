@@ -5,11 +5,13 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
+  workflow_dispatch:
+
+on:
   schedule:
     # Run at UTC 13:25 on Tue-Fri 
     - cron '25 13 * * 2,3,4,5'
-
-  workflow_dispatch:
 
 jobs:
   build:
