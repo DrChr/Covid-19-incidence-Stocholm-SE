@@ -2,8 +2,9 @@ name: Generate Covid-19 incidence graphs
 
 on:
   push:
-    branches:
-      - master
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   schedule:
     - cron: '25 13 * * 2,3,4,5'
   workflow_dispatch:
