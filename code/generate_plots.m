@@ -13,7 +13,7 @@ function [incidence, vaccinations] = generate_plots(incidence, vaccinations)
     
     % Use two 'datetime' objects to denote time range to show.
     % Note: Illustrating adding two weeks to the end date.
-    time_range = datetime({'2021-06-28' '2021-09-06'}) + [0 2*7];
+    time_range = datetime({'2021-06-28' '2021-10-25'}) + [0 0*7];
 
     % Place some common arguments to the plot functions in a cell array
     plot_data = { time_range  incidence  vaccinations };
@@ -38,7 +38,7 @@ end
 function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
     region = region_data(region_key);
     dt_range = datetime(["2021-06-28" "2021-09-20"]);
-    { ...
+    L1 = { ...
       datetime({'2021-06-28' '2021-09-06'})' [25 800]'-5 'k--', ...
       dt_range' 770*[1 1]' 'r--', ...    
     };
@@ -53,7 +53,7 @@ function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
     y1 = y; y1(idx_wend) = deal(nan); y1(idx_mon) = deal(nan);
     ym = movmean(y1, 7, 'omitnan');
     semilogy(...
-        ans{:}, ...
+        L1{:}, ...
         T1.t(idx_mon), y(idx_mon), '.', ...
         T1.t(idx_tue), y(idx_tue), '.', ...
         T1.t(idx_wday), y(idx_wday), '.', ...
@@ -129,10 +129,13 @@ function plot_mean_incidence(t_range, varargin)
 end
 
 function set_limits_etc_for_incidence_plots(t_range, region_name)
-    title(sprintf('Covid-19 incidence, %s', region_name));
+    title(sprintf('Covid-19 incidence, %s, (generated %s)', region_name, datestr(now(), 31)));
+    set_figure_size(gcf(), 1200, 500);
 
     xlim(t_range);
-    xticks(datetime('2021-06-28') + (0:12)*days(7));
+    t_days = t_range(1):t_range(2);
+    t_mondays = t_days(weekday(t_days) == 2);
+    xticks(t_mondays);
 
     ylabel('Confirmed cases / million people / day');
     yticks([10 20 50 100 200 500 1000]);
@@ -141,4 +144,7 @@ function set_limits_etc_for_incidence_plots(t_range, region_name)
     grid on;
 end
 
-
+function set_figure_size(fig, width, height)
+  p = get(fig, 'position');
+  set(fig, 'position', [p(1:2) [width height]]);
+end
