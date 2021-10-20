@@ -1,3 +1,6 @@
-Check if GitHub can deal with .org-files.
+This repository should generate plots of the Covid-19 incidence for
+Stockholm and Sweden. The result should appear on these pages:
+https://drchr.github.io/Covid-19-incidence-Stocholm-SE/
 
-* Section heading - level - 1
+The data is taken from the web page of Folkhälsomyndigheten, that is
+updated on Wednesdays through Fridays.
