@@ -2,10 +2,13 @@ name: Generate Covid-19 incidence graphs
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - master
+
+  schedule:
+    - cron: '25 13 * * 2,3,4,5'
 
   workflow_dispatch:
-
 
 jobs:
   build:
