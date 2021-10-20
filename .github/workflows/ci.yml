@@ -1,8 +1,11 @@
 name: Generate Covid-19 incidence graphs
+
 on:
-  schedule:
-    # Run at UTC 13:25 on Tue-Fri 
-    - cron '25 13 * * 2,3,4,5'
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
 
 jobs:
   build:
