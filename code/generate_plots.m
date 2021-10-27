@@ -13,7 +13,7 @@ function [incidence, vaccinations] = generate_plots(incidence, vaccinations)
     
     % Use two 'datetime' objects to denote time range to show.
     % Note: Illustrating adding two weeks to the end date.
-    time_range = datetime({'2021-06-28' '2021-10-25'}) + [0 0*7];
+    time_range = datetime({'2021-06-28' '2021-10-25'}) + [0 2*7];
 
     % Place some common arguments to the plot functions in a cell array
     plot_data = { time_range  incidence  vaccinations };
