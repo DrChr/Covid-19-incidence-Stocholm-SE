@@ -51,9 +51,14 @@ function T1 = process_incidence_table(T0)
 end
 
 function V = process_vaccinations_table(V0)
-    hack_to_get_week_number = @(Y, W) 52*(str2double(Y)-2021) + str2double(W);
+    if isnumeric(V0.('År')) && isnumeric(V0.Vecka)
+        hack_to_get_week_number = @(Y, W) 52*(Y-2021) + W;
+        v = arrayfun(hack_to_get_week_number, V0.('År'), V0.Vecka);
+    else
+        hack_to_get_week_number = @(Y, W) 52*(str2double(Y)-2021) + str2double(W);
+        v = cellfun(hack_to_get_week_number, V0.('År'), V0.Vecka);
+    end
 
-    v = cellfun(hack_to_get_week_number, V0.('År'), V0.Vecka);
     n = V0.('Antal vaccinerade');
     region = categorical(V0.Region);
     status = categorical(V0.Vaccinationsstatus);

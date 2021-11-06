@@ -9,7 +9,7 @@
 function [incidence, vaccinations] = generate_plots(incidence, vaccinations)
     if nargin == 0
         [incidence, vaccinations] = download_and_import_data();
-    end;
+    end
     
     % Use two 'datetime' objects to denote time range to show.
     % Note: Illustrating adding two weeks to the end date.
@@ -58,6 +58,7 @@ function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
         T1.t(idx_tue), y(idx_tue), '.', ...
         T1.t(idx_wday), y(idx_wday), '.', ...
         T1.t, ym, ...
+        repmat(datetime("2021-11-01"), 1, 2), [10 1000], '--', ...
         'markersize',12, 'linewidth', 1.5);
 
     legend(...
