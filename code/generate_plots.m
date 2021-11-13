@@ -13,7 +13,7 @@ function [incidence, vaccinations] = generate_plots(incidence, vaccinations)
     
     % Use two 'datetime' objects to denote time range to show.
     % Note: Illustrating adding two weeks to the end date.
-    time_range = datetime({'2021-06-28' '2021-10-25'}) + [0 2*7];
+    time_range = [datetime('2021-06-28') next_monday(datetime('today'))];
 
     % Place some common arguments to the plot functions in a cell array
     plot_data = { time_range  incidence  vaccinations };
@@ -148,4 +148,12 @@ end
 function set_figure_size(fig, width, height)
   p = get(fig, 'position');
   set(fig, 'position', [p(1:2) [width height]]);
+end
+
+%% Get date of _next_ monday w.r.t to 't' (a datetime object)
+function y = next_monday(t)
+    days = t + (1:7);
+    idx_mon = find(weekday(days) == 2, 1, 'first');
+    assert(numel(idx_mon) == 1);
+    y = days(idx_mon);
 end
