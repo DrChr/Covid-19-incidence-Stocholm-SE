@@ -29,10 +29,10 @@ function [incidence, vaccinations] = generate_plots(incidence, vaccinations)
 end
 
 function [t, ym] = plot_Covid_for_region(region_key, t_range, T1, V1)
-    subplot(211);
+    %subplot(211);
     [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range);
-    subplot(212);
-    plot_vaccination_against_Covid_19(V1, region_key, t_range);
+    %subplot(212);
+    %plot_vaccination_against_Covid_19(V1, region_key, t_range);
 end
 
 function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
