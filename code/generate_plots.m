@@ -11,9 +11,8 @@ function [incidence, vaccinations] = generate_plots(incidence, vaccinations)
         [incidence, vaccinations] = download_and_import_data();
     end
     
-    % Use two 'datetime' objects to denote time range to show.
-    % Note: Illustrating adding two weeks to the end date.
-    time_range = [datetime('2021-06-28') next_monday(datetime('today'))];
+    time_range = [datetime('2021-06-28') ...
+                  next_monday(max(datetime('today'), datetime('2021-12-31')))];
 
     % Place some common arguments to the plot functions in a cell array
     plot_data = { time_range  incidence  vaccinations };
@@ -52,6 +51,7 @@ function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
     idx_wend = w == 1 | w == 7;
     y1 = y; y1(idx_wend) = deal(nan); y1(idx_mon) = deal(nan);
     ym = movmean(y1, 7, 'omitnan');
+    plot_fmt = { 'markersize',12, 'linewidth', 1.5 };
     semilogy(...
         L1{:}, ...
         T1.t(idx_mon), y(idx_mon), '.', ...
@@ -59,7 +59,14 @@ function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
         T1.t(idx_wday), y(idx_wday), '.', ...
         T1.t, ym, ...
         repmat(datetime("2021-11-01"), 1, 2), [10 1000], '--', ...
-        'markersize',12, 'linewidth', 1.5);
+        plot_fmt{:});
+
+    if strcmp(region_key, 'stockholm')
+        L2 = { datetime({'2021-11-15' '2021-12-19'})' [95 880]'-5 'k--' };
+        hold on
+        semilogy(L2{:}, plot_fmt{:});
+        hold off
+    end
 
     legend(...
         'slope guessed', ...
@@ -131,12 +138,13 @@ end
 
 function set_limits_etc_for_incidence_plots(t_range, region_name)
     title(sprintf('Covid-19 incidence, %s, (generated %s UTC)', region_name, datestr(now(), 31)));
-    set_figure_size(gcf(), 1200, 500);
+    set_figure_size(gcf(), 1600, 500);
 
     xlim(t_range);
     t_days = t_range(1):t_range(2);
     t_mondays = t_days(weekday(t_days) == 2);
     xticks(t_mondays);
+    xtickformat('MM-dd');
 
     ylabel('Confirmed cases / million people / day');
     yticks([10 20 50 100 200 500 1000]);
