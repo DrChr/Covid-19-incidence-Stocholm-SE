@@ -47,7 +47,7 @@ function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
     w = weekday(t);
     idx_mon = w == 2;
     idx_tue = w == 3;
-    idx_wday = w == 4 | w == 5 |w == 6;
+    idx_wday = w == 4 | w == 5 | w == 6;
     idx_wend = w == 1 | w == 7;
     y1 = y; y1(idx_wend) = deal(nan); y1(idx_mon) = deal(nan);
     ym = movmean(y1, 7, 'omitnan');
@@ -132,7 +132,8 @@ function plot_mean_incidence(t_range, varargin)
         legend_args = [legend_args {label}];
     end
     semilogy(plot_args{:});
-    legend(legend_args);
+    legend(legend_args, ...
+           'location', 'northwest');
     set_limits_etc_for_incidence_plots(t_range, '...');
 end
 
@@ -147,7 +148,7 @@ function set_limits_etc_for_incidence_plots(t_range, region_name)
     xtickformat('MM-dd');
 
     ylabel('Confirmed cases / million people / day');
-    yticks([10 20 50 100 200 500 1000]);
+    yticks([10 20 50 100 200 500 1000 1500]);
     ylim(); ylim([10 max(1000, ans(2))]);
 
     grid on;
