@@ -148,8 +148,8 @@ function set_limits_etc_for_incidence_plots(t_range, region_name)
     xtickformat('MM-dd');
 
     ylabel('Confirmed cases / million people / day');
-    yticks([10 50 100 200 500 1000 2000]);
-    ylim(); ylim([10 max(2000, ans(2))]);
+    yticks([10 50 100 500 1000 2000 3000]);
+    ylim(); ylim([10 max(3000, ans(2))]);
 
     grid on;
 end
