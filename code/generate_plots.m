@@ -11,8 +11,8 @@ function [incidence, vaccinations] = generate_plots(incidence, vaccinations)
         [incidence, vaccinations] = download_and_import_data();
     end
     
-    time_range = [datetime('2021-06-28') ...
-                  next_monday(max(datetime('today'), datetime('2021-12-31')))];
+    time_range = [datetime('2021-10-15') ...
+                  next_monday(max(datetime('today'), datetime('2022-02-22')))];
 
     % Place some common arguments to the plot functions in a cell array
     plot_data = { time_range  incidence  vaccinations };
@@ -36,7 +36,7 @@ end
 
 function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
     region = region_data(region_key);
-    dt_range = datetime(["2021-06-28" "2021-09-20"]);
+    dt_range = [t_range(1) datetime(["2021-11-15"])];
     L1 = { ...
       datetime({'2021-06-28' '2021-09-06'})' [25 800]'-5 'k--', ...
       dt_range' 770*[1 1]' 'r--', ...    
@@ -58,8 +58,13 @@ function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
         T1.t(idx_tue), y(idx_tue), '.', ...
         T1.t(idx_wday), y(idx_wday), '.', ...
         T1.t, ym, ...
-        repmat(datetime("2021-11-01"), 1, 2), [10 1000], '--', ...
+        ... % repmat(datetime("2021-11-01"), 1, 2), [10 1000], '--', ...
         plot_fmt{:});
+    hold on
+    semilogy(T1.t(idx_wend), y(idx_wend), '.r');
+    hold off
+    ax = gca();
+    set(ax, 'YAxisLocation', 'right');
 
     if strcmp(region_key, 'stockholm')
         L2 = { datetime({'2021-11-15' '2021-12-19'})' [95 880]'-5 'k--' };
@@ -70,7 +75,7 @@ function [t, ym] = plot_incidence_of_Covid_19(T1, region_key, t_range)
 
     legend(...
         'slope guessed', ...
-        'peak value', ...
+        'peak value x-mas 2020', ...
         'Mondays', ...
         'Tuesdays', ...
         'Wed-Fri', ...
@@ -148,9 +153,9 @@ function set_limits_etc_for_incidence_plots(t_range, region_name)
     xtickformat('MM-dd');
 
     ylabel('Confirmed cases / million people / day');
-    yticks([10 50 100 200 500 1000 2000]);
-    ylim(); ylim([10 max(2000, ans(2))]);
-
+    y_ticks = [50 100 200 500 1000 2000 3000 4000 5000 6000 7000 8000];
+    yticks(y_ticks);
+    ylim(y_ticks([1 end]));
     grid on;
 end
 
